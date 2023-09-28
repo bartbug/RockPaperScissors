@@ -42,33 +42,41 @@ function playRound(playerSelection, computerSelection) {
     }
     
 }
+const results = document.querySelector("#results");
+const buttons = document.querySelectorAll('button');
+const score = document.createElement("h2");
+const gameMessage = document.createElement("p");
 
-function game() {
-    let matchresult;
-    let playerScore = 0;
-    let compScore = 0;
+results.appendChild(gameMessage);
+results.appendChild(score);
+
+let matchresult;
+let playerScore = 0;
+let compScore = 0;
+
+buttons.forEach((button) => {
+
+    button.addEventListener('click', () => {
+        matchresult = playRound(button.id, getComputerChoice());
     
-    for (let i = 0; i < 5; i++) {
-        matchresult = playRound(prompt("play rock paper scissors!"), getComputerChoice());
-        
-        console.log(matchresult);
-        charResult = matchresult.charAt(4);
+
+        let charResult = matchresult.charAt(4);
         if (charResult == "l") {
             compScore++;
         }
         if (charResult == "w") {
             playerScore++;
         }
-        
-    }
+    
+        gameMessage.textContent = matchresult;
+        score.textContent = "Your score: " + playerScore + " Computer score: " + compScore;
+        if (playerScore == 5) {
+            score.textContent = "You win!";
+        }
+        if (compScore == 5) {
+            score.textContent = "You lose!";
+        }
+    });
 
-    if (playerScore > compScore) {
-        console.log("you win!");
-    }
-     if (playerScore < compScore) {
-        console.log("you lose!");
-     }
-     if (playerScore == compScore) {
-        console.log("tie :)");
-     }
-}
+});
+
